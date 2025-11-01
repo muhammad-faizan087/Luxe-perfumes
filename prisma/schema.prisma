@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id            String   @id @default(uuid())
+  name          String
+  price         Int
+  image         String
+  description   String
+  category      String
+  notes         String[]
+  volume        String
+  concentration String
+  rating        Float
+  reviews       Int
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  CartItem  CartItem[]
+}
+
+model User {
+  id          String   @id @default(uuid())
+  clerkUserId String   @unique
+  email       String   @unique
+  name        String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  bio  String?
+  Cart Cart? 
+}
+
+model Cart {
+  id        String     @id @default(uuid())
+  userId    String     @unique // One cart per user
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  user User @relation(fields: [userId], references: [clerkUserId])
+}
+
+model CartItem {
+  id       String  @id @default(uuid())
+  cartId   String
+  itemId   String
+  quantity Int
+  name     String   @default("Unknown")
+price    Int      @default(0)
+image    String   @default("N/A")
+
+  item Product @relation(fields: [itemId], references: [id])
+  cart Cart    @relation(fields: [cartId], references: [id])
+
+  @@unique([cartId, itemId]) // prevent duplicates of same product in same cart but allow same product in different carts
+}
+

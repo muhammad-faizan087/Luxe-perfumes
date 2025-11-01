@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "CartItem" ADD COLUMN     "image" TEXT NOT NULL DEFAULT 'N/A',
+ADD COLUMN     "name" TEXT NOT NULL DEFAULT 'Unknown',
+ADD COLUMN     "price" INTEGER NOT NULL DEFAULT 0;
