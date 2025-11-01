@@ -157,12 +157,12 @@ export default function Navbar() {
               >
                 About
               </Link>
-              <Link
+              {/* <Link
                 href="/contact"
                 className="block text-white hover:text-amber-600 py-2"
               >
                 Contact
-              </Link>
+              </Link> */}
             </div>
           )}
         </SignedIn>

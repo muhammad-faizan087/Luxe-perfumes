@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import Image from "next/image";
 
 export default function ProductsPage({ products }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -52,11 +53,13 @@ export default function ProductsPage({ products }) {
             {filteredProducts.map((product) => (
               <Link key={product.id} href={`/products/${product.id}`}>
                 <div className="group cursor-pointer">
-                  <div className="bg-gray-900 overflow-hidden mb-4 hover:opacity-80 transition-opacity">
-                    <img
+                  <div className="bg-gray-900 overflow-hidden relative w-full h-96 mb-4 hover:opacity-80 transition-opacity">
+                    <Image
                       src={product.image || "/placeholder.svg"}
                       alt={product.name}
-                      className="w-full h-96 object-cover"
+                      fill
+                      // quality={100}
+                      className="object-cover rounded-lg"
                     />
                   </div>
                   <h3

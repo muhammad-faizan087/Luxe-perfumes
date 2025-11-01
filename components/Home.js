@@ -4,6 +4,8 @@ import { useState } from "react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import About from "@/components/about";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Home({ products }) {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -45,13 +47,13 @@ export default function Home({ products }) {
           >
             Discover our exclusive collection of premium fragrances
           </p>
-          <a
+          <Link
             href="/products"
             className="px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white font-semibold transition-colors"
             style={{ fontFamily: "Georgia, serif" }}
           >
             Explore Collection
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -67,16 +69,18 @@ export default function Home({ products }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {products.map((product) => (
-              <a
+              <Link
                 key={product.id}
                 href={`/products/${product.id}`}
                 className="group cursor-pointer"
               >
-                <div className="bg-gray-900 overflow-hidden mb-4 hover:opacity-80 transition-opacity">
-                  <img
+                <div className="bg-gray-900 overflow-hidden mb-4 relative w-full h-96 hover:opacity-80 transition-opacity">
+                  <Image
                     src={product.image || "/placeholder.svg"}
                     alt={product.name}
-                    className="w-full h-96 object-cover"
+                    fill
+                    // quality={100}
+                    className="object-cover rounded-lg"
                   />
                 </div>
                 <h3
@@ -89,7 +93,7 @@ export default function Home({ products }) {
                 <p className="text-amber-600 text-lg font-semibold">
                   $ {product.price}
                 </p>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

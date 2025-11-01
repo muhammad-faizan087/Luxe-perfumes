@@ -7,6 +7,7 @@ import Footer from "@/components/footer";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import Image from "next/image";
 
 export default function ProductDetail({ product }) {
   const router = useRouter();
@@ -47,11 +48,13 @@ export default function ProductDetail({ product }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="bg-gray-900 p-8">
-              <img
+            <div className="bg-gray-900 p-8 relative w-full h-[400px] sm:h-[500px]">
+              <Image
                 src={product.image || "/placeholder.svg"}
                 alt={product.name}
-                className="w-full h-auto"
+                fill
+                // quality={100}
+                className="object-cover rounded-lg"
               />
             </div>
 
@@ -133,7 +136,7 @@ export default function ProductDetail({ product }) {
                     await handleAddToCart();
                   }}
                   disabled={loading}
-                  className="flex-1 bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 transition-colors"
+                  className="flex-1 bg-amber-600 cursor-pointer hover:bg-amber-700 text-white font-semibold py-3 transition-colors"
                 >
                   {loading ? (
                     <span className="flex justify-center items-center gap-2">
