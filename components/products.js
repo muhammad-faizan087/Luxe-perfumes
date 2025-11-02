@@ -5,9 +5,11 @@ import Link from "next/link";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import Image from "next/image";
+import { Loader2 } from "lucide-react";
 
 export default function ProductsPage({ products }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [Navigating, setNavigating] = useState(false);
 
   const filteredProducts =
     selectedCategory === "all"
@@ -16,6 +18,15 @@ export default function ProductsPage({ products }) {
 
   return (
     <div className="min-h-screen bg-black">
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-200 ${
+          Navigating
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        } bg-black/70`}
+      >
+        <Loader2 className="animate-spin text-white w-10 h-10" />
+      </div>
       <Navbar />
 
       <div className="pt-32 pb-20 px-4">
@@ -51,7 +62,13 @@ export default function ProductsPage({ products }) {
           {/* Products Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProducts.map((product) => (
-              <Link key={product.id} href={`/products/${product.id}`}>
+              <Link
+                key={product.id}
+                href={`/products/${product.id}`}
+                onClick={() => {
+                  setNavigating(true);
+                }}
+              >
                 <div className="group cursor-pointer">
                   <div className="bg-gray-900 overflow-hidden relative w-full h-96 mb-4 hover:opacity-80 transition-opacity">
                     <Image

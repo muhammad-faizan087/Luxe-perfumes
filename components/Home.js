@@ -6,23 +6,34 @@ import Footer from "@/components/footer";
 import About from "@/components/about";
 import Link from "next/link";
 import Image from "next/image";
+import { Loader2 } from "lucide-react";
 
 export default function Home({ products }) {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [Navigating, setNavigating] = useState(false);
 
   return (
     <div className="min-h-screen bg-black">
-      {/* Hero Section with Video Background */}
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-200 ${
+          Navigating
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        } bg-black/70`}
+      >
+        <Loader2 className="animate-spin text-white w-10 h-10" />
+      </div>
       <div className="relative w-full h-screen overflow-hidden">
         {/* Video Background */}
         <video
           autoPlay
           muted
           loop
+          playsInline
+          preload="auto"
           className="absolute inset-0 w-full h-full object-cover"
           onLoadedData={() => setIsVideoLoaded(true)}
         >
-          {/* Replace with your video path */}
           <source src="/perfume-bg.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -51,6 +62,9 @@ export default function Home({ products }) {
             href="/products"
             className="px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white font-semibold transition-colors"
             style={{ fontFamily: "Georgia, serif" }}
+            onClick={() => {
+              setNavigating(true);
+            }}
           >
             Explore Collection
           </Link>
@@ -73,6 +87,9 @@ export default function Home({ products }) {
                 key={product.id}
                 href={`/products/${product.id}`}
                 className="group cursor-pointer"
+                onClick={() => {
+                  setNavigating(true);
+                }}
               >
                 <div className="bg-gray-900 overflow-hidden mb-4 relative w-full h-96 hover:opacity-80 transition-opacity">
                   <Image

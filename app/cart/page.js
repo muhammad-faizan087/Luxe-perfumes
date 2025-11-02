@@ -14,6 +14,7 @@ export default function CartPage() {
   const [Clearing, setClearing] = useState(false);
   const [Incrementing, setIncrementing] = useState(false);
   const [Decrementing, setDecrementing] = useState(false);
+  const [Navigating, setNavigating] = useState(false);
 
   const items = cart?.items || [];
 
@@ -41,7 +42,7 @@ export default function CartPage() {
       {/* Loader Overlay */}
       <div
         className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-200 ${
-          Removing
+          Removing || Navigating
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         } bg-black/70`}
@@ -83,6 +84,9 @@ export default function CartPage() {
               </p>
               <Link
                 href="/products"
+                onClick={() => {
+                  setNavigating(true);
+                }}
                 className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base transition-colors"
               >
                 Continue Shopping
@@ -188,6 +192,9 @@ export default function CartPage() {
 
                 <Link
                   href="/products"
+                  onClick={() => {
+                    setNavigating(true);
+                  }}
                   className="inline-block mt-6 text-amber-600 hover:text-amber-500 transition-colors font-medium text-sm sm:text-base"
                 >
                   ← Continue Shopping
@@ -236,7 +243,7 @@ export default function CartPage() {
 
                   <Link
                     href="/checkout"
-                    className="w-full block text-center bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2.5 sm:py-3 rounded transition-colors mb-3 text-sm sm:text-base"
+                    className="w-full block text-center cursor-pointer bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2.5 sm:py-3 rounded transition-colors mb-3 text-sm sm:text-base"
                   >
                     Proceed to Checkout
                   </Link>
@@ -248,7 +255,7 @@ export default function CartPage() {
                       await HandleRemoveFromCart(null, "clearCart");
                       setClearing(false);
                     }}
-                    className="w-full text-center border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 font-semibold py-2.5 sm:py-3 rounded transition-colors text-sm sm:text-base"
+                    className="w-full text-center border cursor-pointer border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 font-semibold py-2.5 sm:py-3 rounded transition-colors text-sm sm:text-base"
                   >
                     {Clearing ? "Clearing Cart..." : "Clear Cart"}
                   </button>

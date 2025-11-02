@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { Loader2 } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [Navigating, setNavigating] = useState(false);
   // const [cart, setCart] = useState();
 
   // useEffect(() => {
@@ -23,9 +25,21 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/30 border-b border-white/10">
+      {/* Fullscreen overlay loader */}
+      {Navigating && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity duration-200">
+          <Loader2 className="animate-spin text-white w-12 h-12" />
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <Link href="/" className="flex items-center space-x-2">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="flex items-center space-x-2"
+            onClick={() => setNavigating(true)}
+          >
             <div className="w-10 h-10 bg-amber-600 flex items-center justify-center">
               <span
                 className="text-white font-bold text-lg"
@@ -44,7 +58,9 @@ export default function Navbar() {
 
           <SignedOut>
             <button className="cursor-pointer py-2 px-4 bg-orange-400 hover:bg-orange-500 text-white font-semibold rounded-full transition-colors">
-              <Link href={"/sign-in"}>Sign In</Link>
+              <Link href={"/sign-in"} onClick={() => setNavigating(true)}>
+                Sign In
+              </Link>
             </button>
           </SignedOut>
 
@@ -53,18 +69,27 @@ export default function Navbar() {
               <Link
                 href="/"
                 className="text-white hover:text-amber-600 transition-colors"
+                onClick={() => {
+                  setNavigating(true);
+                }}
               >
                 Home
               </Link>
               <Link
                 href="/products"
                 className="text-white hover:text-amber-600 transition-colors"
+                onClick={() => {
+                  setNavigating(true);
+                }}
               >
                 Products
               </Link>
               <Link
                 href="/about"
                 className="text-white hover:text-amber-600 transition-colors"
+                onClick={() => {
+                  setNavigating(true);
+                }}
               >
                 About
               </Link>
@@ -83,6 +108,9 @@ export default function Navbar() {
                 <Link
                   href="/cart"
                   className="text-white hover:text-amber-600 transition-colors"
+                  onClick={() => {
+                    setNavigating(true);
+                  }}
                 >
                   <svg
                     className="w-6 h-6"
@@ -142,18 +170,27 @@ export default function Navbar() {
               <Link
                 href="/"
                 className="block text-white hover:text-amber-600 py-2"
+                onClick={() => {
+                  setNavigating(true);
+                }}
               >
                 Home
               </Link>
               <Link
                 href="/products"
                 className="block text-white hover:text-amber-600 py-2"
+                onClick={() => {
+                  setNavigating(true);
+                }}
               >
                 Products
               </Link>
               <Link
                 href="/about"
                 className="block text-white hover:text-amber-600 py-2"
+                onClick={() => {
+                  setNavigating(true);
+                }}
               >
                 About
               </Link>
